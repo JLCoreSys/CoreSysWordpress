@@ -1,0 +1,1 @@
+[08-Nov-2013 17:31:12 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/jladserv/dev_working/vendor/wordpress/WordPress/wp-includes/pluggable.php:899) in /home/jladserv/dev_working/vendor/wordpress/WordPress/wp-includes/pluggable.php on line 901
