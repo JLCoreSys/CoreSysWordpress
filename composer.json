@@ -1,0 +1,12 @@
+{
+    "name": "CoreSys/Wordpress",
+    "description": "Modified Wordpress 3.7.1 for Symfony2",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "JLCoreSystems",
+            "email": "admin@jlcoresystems.com"
+        }
+    ],
+    "target-dir": "CoreSys/Wordpress"
+}
