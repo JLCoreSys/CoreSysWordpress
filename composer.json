@@ -1,5 +1,6 @@
 {
-    "name": "CoreSys/Wordpress",
+    "name": "jmccrei/CoreSysWordpress",
+    "type": "symfony-bundle",
     "description": "Modified Wordpress 3.7.1 for Symfony2",
     "minimum-stability": "stable",
     "authors": [
