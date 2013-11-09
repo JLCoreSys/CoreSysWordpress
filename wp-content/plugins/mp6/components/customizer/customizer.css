@@ -42,7 +42,7 @@ body.full-overlay-active { overflow: hidden; }
 
 .wp-full-overlay .collapse-sidebar-arrow { position: static; margin-top: 0; margin-left: 0; display: block; width: auto; height: auto; background: none; }
 
-.wp-full-overlay .collapse-sidebar-arrow:before { float: left; content: "\f148"; font: normal 20px/1 'dashicons'; speak: none; display: block; padding: 0; text-indent: 0; text-align: center; position: relative; -webkit-font-smoothing: antialiased; text-decoration: none !important; }
+.wp-full-overlay .collapse-sidebar-arrow:before { float: left; content: "\f148"; font: normal 20px/1 'dashicons'; speak: none; display: block; padding: 0; text-indent: 0; text-align: center; position: relative; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-decoration: none !important; }
 
 .wp-full-overlay.collapsed .collapse-sidebar-arrow { background-position: -1px -109px; }
 
@@ -122,7 +122,7 @@ body { overflow: hidden; }
 
 .customize-control .dropdown-arrow { position: absolute; top: 0; bottom: 0; right: 0; width: 20px; background: #eeeeee; }
 
-.customize-control .dropdown-arrow:after { content: "\f140"; font: normal 20px/1 'dashicons'; speak: none; display: block; padding: 0; text-indent: 0; text-align: center; position: relative; -webkit-font-smoothing: antialiased; text-decoration: none !important; color: #333; }
+.customize-control .dropdown-arrow:after { content: "\f140"; font: normal 20px/1 'dashicons'; speak: none; display: block; padding: 0; text-indent: 0; text-align: center; position: relative; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-decoration: none !important; color: #333; }
 
 .customize-control .dropdown-status { color: #333; background: #eeeeee; display: none; max-width: 112px; }
 

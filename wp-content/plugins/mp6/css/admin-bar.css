@@ -86,7 +86,6 @@
 	min-width: 600px; /* match the min-width of the body in wp-admin.css */
 	z-index: 99999;
 	background: #222;
-	-webkit-font-smoothing: subpixel-antialiased;
 }
 
 #wpadminbar .ab-sub-wrapper,
@@ -224,6 +223,7 @@
 	speak: none;
 	padding: 4px 0;
 	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 	background-image: none !important;
 	color: #999;
 	margin-right: 6px;
@@ -270,6 +270,7 @@
 	font: normal 17px/1 'dashicons';
 	speak: none;
 	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 #wpadminbar .menupop .menupop > .ab-item {
@@ -443,6 +444,7 @@
 	font: normal 16px/1 'dashicons' !important;
 	speak: none;
 	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 	color: #eee;
 }
 
@@ -530,6 +532,7 @@
 	color: #999;
 	speak: none;
 	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 #wpadminbar>#wp-toolbar>#wp-admin-bar-top-secondary>#wp-admin-bar-search #adminbarsearch input.adminbar-input {

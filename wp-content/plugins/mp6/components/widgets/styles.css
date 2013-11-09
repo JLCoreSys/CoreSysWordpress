@@ -89,6 +89,7 @@ div.widget-liquid-left {
 			color: #ccc;
 			display: inline-block;
 			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
 			font: normal 20px/1 'dashicons';
 			vertical-align: top;
 		}
@@ -367,6 +368,7 @@ div.widget-liquid-right div#widgets-right .widgets-sortables:before {
 	content: '\f111';
 	display: inline-block;
 	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 	font: normal 16px/1 'dashicons';
 	vertical-align: top;
 	position: relative;

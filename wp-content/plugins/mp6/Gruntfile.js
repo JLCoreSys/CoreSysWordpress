@@ -39,11 +39,11 @@ module.exports = function(grunt) {
     },
 
     watch: {
-      sass: {
+      sassColors: {
         files: ['<%= meta.colors %>/**/*.scss', ],
         tasks: ['sass:colors']
       },
-      sass: {
+      sassAdmin: {
         files: ['<%= meta.colors %>/picker/style.scss', '<%= meta.customizer %>/scss/*.scss' ],
         tasks: ['sass:admin']
       }
