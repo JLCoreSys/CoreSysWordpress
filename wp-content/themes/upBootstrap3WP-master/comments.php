@@ -16,10 +16,13 @@
  * the visitor has not yet entered the password we will
  * return early without loading the comments.
  */
+if( defined( 'SYMFONY_WP' ) ) {
+    include( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'twig' . DIRECTORY_SEPARATOR . 'comments.html.twig' );
+} else {
 if ( post_password_required() )
 	return;
 ?>
-
+( COMMENTS-PAGE )
 	<div id="comments" class="comments-area">
 
 	<?php // You can start editing here -- including this comment! ?>
@@ -135,3 +138,4 @@ if ( post_password_required() )
 	comment_form($args); ?>
 
 </div><!-- #comments -->
+<?php } ?>

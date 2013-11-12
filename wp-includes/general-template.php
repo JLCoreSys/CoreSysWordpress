@@ -211,6 +211,10 @@ function get_search_form( $echo = true ) {
  * @return string|null String when retrieving, null when displaying.
  */
 function wp_loginout($redirect = '', $echo = true) {
+    if(defined( 'SYMFONY_WP' ) ) {
+        global $s_wordpress;
+        return $s_wordpress->wp_loginout( $redirect, $echo);
+    }
 	if ( ! is_user_logged_in() )
 		$link = '<a href="' . esc_url( wp_login_url($redirect) ) . '">' . __('Log in') . '</a>';
 	else
@@ -269,7 +273,15 @@ function wp_login_url($redirect = '', $force_reauth = false) {
 	if ( $force_reauth )
 		$login_url = add_query_arg('reauth', '1', $login_url);
 
-	return apply_filters('login_url', $login_url, $redirect);
+	$url = apply_filters('login_url', $login_url, $redirect);
+
+    if( defined( 'SYMFONY_WP') )
+    {
+        global $s_wordpress;
+        $url = $s_wordpress->convertUrl( $url );
+    }
+
+    return $url;
 }
 
 /**
@@ -377,6 +389,11 @@ function wp_lostpassword_url( $redirect = '' ) {
  * @return string|null String when retrieving, null when displaying.
  */
 function wp_register( $before = '<li>', $after = '</li>', $echo = true ) {
+
+    if(defined( 'SYMFONY_WP' ) ) {
+        global $s_wordpress;
+        return $s_wordpress->wp_register( $before, $after, $echo );
+    }
 
 	if ( ! is_user_logged_in() ) {
 		if ( get_option('users_can_register') )

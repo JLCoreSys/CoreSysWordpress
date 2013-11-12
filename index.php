@@ -16,5 +16,3 @@ ini_set( 'display_errors', 1 );
 
 /** Loads the WordPress Environment and Template */
 require( dirname( __FILE__ ) . '/wp-blog-header.php' );
-
-debug_print_backtrace( 0, 5 );

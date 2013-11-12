@@ -17,7 +17,7 @@ if( defined( 'SYMFONY_WP' ) ) {
 } else {
 
 get_header(); ?>
-( INDEX_FILE )
+    ( INDEX-PAGE )
 	<div class="container">
 		<div class="row">
 			<div class="col-md-8">

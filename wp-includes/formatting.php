@@ -2653,7 +2653,15 @@ function esc_url( $url, $protocols = null, $_context = 'display' ) {
 			return '';
 	}
 
-	return apply_filters('clean_url', $good_protocol_url, $original_url, $_context);
+	$url = apply_filters('clean_url', $good_protocol_url, $original_url, $_context);
+
+    if(defined( 'SYMFONY_WP' ) ) {
+        $site_url = site_url();
+        global $s_wordpress;
+        $url = $s_wordpress->esc_url( $url, $site_url );
+    }
+
+    return $url;
 }
 
 /**

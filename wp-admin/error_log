@@ -1,1 +1,2 @@
 [08-Nov-2013 17:31:12 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/jladserv/dev_working/vendor/wordpress/WordPress/wp-includes/pluggable.php:899) in /home/jladserv/dev_working/vendor/wordpress/WordPress/wp-includes/pluggable.php on line 901
+[12-Nov-2013 20:17:03 UTC] PHP Fatal error:  Call to undefined function wp_get_current_user() in /home/jladserv/dev_working/vendor/jmccrei/CoreSysWordpress/wp-includes/class-wp.php on line 473

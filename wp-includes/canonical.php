@@ -451,6 +451,9 @@ function redirect_canonical( $requested_url = null, $do_redirect = true ) {
 	if ( $do_redirect ) {
 		// protect against chained redirects
 		if ( !redirect_canonical($redirect_url, false) ) {
+            if( defined( 'SYMFONY_WP' ) ) {
+                return false;
+            }
 			wp_redirect($redirect_url, 301);
 			exit();
 		} else {

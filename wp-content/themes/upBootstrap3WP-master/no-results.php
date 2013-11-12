@@ -8,7 +8,7 @@
  * @package upBootWP 0.1
  */
 ?>
-
+( NO-RESULTS-PAGE )
 <section class="no-results not-found">
 	<header class="page-header">
 		<h1 class="page-title"><?php _e( 'Nothing Found', 'upbootwp' ); ?></h1>

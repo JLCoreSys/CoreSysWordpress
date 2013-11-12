@@ -97,6 +97,12 @@ function wp_initial_constants() {
  * @since 3.0.0
  */
 function wp_plugin_directory_constants() {
+
+    if( defined( 'SYMFONY_WP' ) ) {
+        global $s_wordpress;
+        $s_wordpress->wp_plugin_directory_constants();
+    }
+
 	if ( !defined('WP_CONTENT_URL') )
 		define( 'WP_CONTENT_URL', get_option('siteurl') . '/wp-content'); // full url - WP_CONTENT_DIR is defined further up
 

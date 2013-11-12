@@ -162,7 +162,10 @@ function get_permalink( $id = 0, $leavename = false ) {
 	} else { // if they're not using the fancy permalink option
 		$permalink = home_url('?p=' . $post->ID);
 	}
-	return apply_filters('post_link', $permalink, $post, $leavename);
+
+	$url = apply_filters('post_link', $permalink, $post, $leavename);
+
+    return $url;
 }
 
 /**
@@ -1957,6 +1960,11 @@ function home_url( $path = '', $scheme = null ) {
  * @return string Home url link with optional path appended.
 */
 function get_home_url( $blog_id = null, $path = '', $scheme = null ) {
+//    if( defined( 'SYMFONY_WP' ) ) {
+//        global $s_wordpress;
+//        return $s_wordpress->get_home_url( $blog_id, $path, $scheme );
+//    }
+
 	$orig_scheme = $scheme;
 
 	if ( empty( $blog_id ) || !is_multisite() ) {
@@ -2018,6 +2026,7 @@ function site_url( $path = '', $scheme = null ) {
  * @return string Site url link with optional path appended.
 */
 function get_site_url( $blog_id = null, $path = '', $scheme = null ) {
+
 	if ( empty( $blog_id ) || !is_multisite() ) {
 		$url = get_option( 'siteurl' );
 	} else {
@@ -2060,6 +2069,12 @@ function admin_url( $path = '', $scheme = 'admin' ) {
  * @return string Admin url link with optional path appended.
 */
 function get_admin_url( $blog_id = null, $path = '', $scheme = 'admin' ) {
+
+//    if( defined( 'SYMFONY_WP' ) ) {
+//        global $s_wordpress;
+//        return $s_wordpress->get_admin_url( $blog_id, $path, $scheme );
+//    }
+
 	$url = get_site_url($blog_id, 'wp-admin/', $scheme);
 
 	if ( $path && is_string( $path ) )
@@ -2406,6 +2421,10 @@ function rel_canonical() {
  * @return string A shortlink or an empty string if no shortlink exists for the requested resource or if shortlinks are not enabled.
  */
 function wp_get_shortlink($id = 0, $context = 'post', $allow_slugs = true) {
+//    if(defined('SYMFONY_WP')) {
+//        global $s_wordpress;
+//        return $s_wordpress->wp_get_shortlink($id, $context, $allow_slugs);
+//    }
 	// Allow plugins to short-circuit this function.
 	$shortlink = apply_filters('pre_get_shortlink', false, $id, $context, $allow_slugs);
 	if ( false !== $shortlink )

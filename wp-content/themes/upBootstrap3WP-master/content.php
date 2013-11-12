@@ -3,8 +3,12 @@
  * @author Matthias Thom | http://upplex.de
  * @package upBootWP 0.1
  */
-?>
 
+if( defined( 'SYMFONY_WP' ) ) {
+    include( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'twig' . DIRECTORY_SEPARATOR . 'content.html.twig' );
+} else {
+?>
+( CONTENT-PAGE )
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<header class="entry-header">
 		<h1 class="entry-title"><a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a></h1>
@@ -62,3 +66,4 @@
 		<?php edit_post_link( __( 'Edit', 'upbootwp' ), '<span class="edit-link">', '</span>' ); ?>
 	</footer><!-- .entry-meta -->
 </article><!-- #post-## -->
+<?php } ?>

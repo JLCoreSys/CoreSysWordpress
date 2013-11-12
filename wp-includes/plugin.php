@@ -401,6 +401,7 @@ function do_action($tag, $arg = '') {
 	if ( !isset($wp_filter[$tag]) ) {
 		if ( isset($wp_filter['all']) )
 			array_pop($wp_current_filter);
+
 		return;
 	}
 

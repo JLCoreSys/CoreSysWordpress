@@ -5,7 +5,11 @@
  * @author Matthias Thom | http://upplex.de
  * @package upBootWP 0.1
  */
+if( defined( 'SYMFONY_WP' ) ) {
+    include( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'twig' . DIRECTORY_SEPARATOR . 'single.html.twig' );
+} else {
 get_header(); ?>
+    ( SINGLE-PAGE2 )
 	<div class="container">
 		<div class="row">
 			<div class="col-md-8">
@@ -36,3 +40,4 @@ get_header(); ?>
 		</div><!-- .row -->
 	</div><!-- .container -->
 <?php get_footer(); ?>
+<?php } ?>

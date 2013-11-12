@@ -687,14 +687,22 @@ function wp_allow_comment($commentdata) {
 	if ( $comment_author_email )
 		$dupe .= $wpdb->prepare( "OR comment_author_email = %s ", wp_unslash( $comment_author_email ) );
 	$dupe .= $wpdb->prepare( ") AND comment_content = %s LIMIT 1", wp_unslash( $comment_content ) );
+
 	if ( $wpdb->get_var($dupe) ) {
+
 		do_action( 'comment_duplicate_trigger', $commentdata );
+
+        if( defined( 'SYMFONY_WP' ) ) {
+            $msg = __('Duplicate comment detected; it looks as though you&#8217;ve already said that!') . '<br><a href="javascript:window.history.back()">&larr; Go Back</a>';
+        } else {
+            $msg = __('Duplicate comment detected; it looks as though you&#8217;ve already said that!');
+        }
+
 		if ( defined('DOING_AJAX') )
-			die( __('Duplicate comment detected; it looks as though you&#8217;ve already said that!') );
+			die( $msg );
 
-		wp_die( __('Duplicate comment detected; it looks as though you&#8217;ve already said that!') );
+		wp_die( $msg );
 	}
-
 	do_action( 'check_comment_flood', $comment_author_IP, $comment_author_email, $comment_date_gmt );
 
 	if ( ! empty( $user_id ) ) {

@@ -858,6 +858,7 @@ function dynamic_sidebar($index = 1) {
 	}
 
 	$sidebars_widgets = wp_get_sidebars_widgets();
+
 	if ( empty( $wp_registered_sidebars[ $index ] ) || empty( $sidebars_widgets[ $index ] ) || ! is_array( $sidebars_widgets[ $index ] ) ) {
 		return false;
 	}
@@ -883,6 +884,7 @@ function dynamic_sidebar($index = 1) {
 				$classname_ .= '_' . get_class($cn);
 		}
 		$classname_ = ltrim($classname_, '_');
+
 		$params[0]['before_widget'] = sprintf($params[0]['before_widget'], $id, $classname_);
 
 		$params = apply_filters( 'dynamic_sidebar_params', $params );

@@ -678,6 +678,7 @@ function wp_set_auth_cookie($user_id, $remember = false, $secure = '') {
 	do_action('set_auth_cookie', $auth_cookie, $expire, $expiration, $user_id, $scheme);
 	do_action('set_logged_in_cookie', $logged_in_cookie, $expire, $expiration, $user_id, 'logged_in');
 
+
 	setcookie($auth_cookie_name, $auth_cookie, $expire, PLUGINS_COOKIE_PATH, COOKIE_DOMAIN, $secure, true);
 	setcookie($auth_cookie_name, $auth_cookie, $expire, ADMIN_COOKIE_PATH, COOKIE_DOMAIN, $secure, true);
 	setcookie(LOGGED_IN_COOKIE, $logged_in_cookie, $expire, COOKIEPATH, COOKIE_DOMAIN, $secure_logged_in_cookie, true);
@@ -896,7 +897,18 @@ function wp_redirect($location, $status = 302) {
 	if ( !$is_IIS && php_sapi_name() != 'cgi-fcgi' )
 		status_header($status); // This causes problems on IIS and some FastCGI setups
 
-	header("Location: $location", true, $status);
+    if( defined( 'SYMFONY_WP' ) ) {
+        global $s_wordpress;
+//        echo 'OLO: ' . $location . '<br>';
+        $location = $s_wordpress->convertUrl( $location );
+//        debug_print_backtrace(0,5);
+//        echo $location;
+//        exit;
+        echo '' . '<meta http-equiv="refresh" content="0; url=' . $location . '" />' . '';
+        exit;
+    } else {
+	    header("Location: $location", true, $status);
+    }
 
 	return true;
 }

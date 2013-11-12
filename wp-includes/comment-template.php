@@ -1175,11 +1175,20 @@ function comments_popup_link( $zero = false, $one = false, $more = false, $css_c
 		echo $home . '/' . $wpcommentspopupfile . '?comments_popup=' . $id;
 		echo '" onclick="wpopen(this.href); return false"';
 	} else { // if comments_popup_script() is not in the template, display simple comment link
-		if ( 0 == $number )
-			echo get_permalink() . '#respond';
-		else
-			comments_link();
-		echo '"';
+        if( defined( 'SYMFONY_WP' ) ) {
+            global $s_wordpress;
+            if ( 0 == $number )
+                echo $s_wordpress->convertUrl( get_permalink() ) . '#respond';
+            else
+                $s_wordpress->convertUrl( comments_link() );
+            echo '"';
+        } else {
+            if ( 0 == $number )
+                echo get_permalink() . '#respond';
+            else
+                comments_link();
+            echo '"';
+        }
 	}
 
 	if ( !empty( $css_class ) ) {
@@ -1256,10 +1265,16 @@ function get_comment_reply_link($args = array(), $comment = null, $post = null) 
 
 	$link = '';
 
-	if ( get_option('comment_registration') && ! is_user_logged_in() )
-		$link = '<a rel="nofollow" class="comment-reply-login" href="' . esc_url( wp_login_url( get_permalink() ) ) . '">' . $login_text . '</a>';
-	else
-		$link = "<a class='comment-reply-link' href='" . esc_url( add_query_arg( 'replytocom', $comment->comment_ID ) ) . "#" . $respond_id . "' onclick='return addComment.moveForm(\"$add_below-$comment->comment_ID\", \"$comment->comment_ID\", \"$respond_id\", \"$post->ID\")'>$reply_text</a>";
+    if( defined( 'SYMFONY_WP' ) ) {
+        global $s_wordpress;
+        $link = $s_wordpress->get_comment_reply_link( $args, $comment, $post, $login_text, $respond_id, $add_below, $reply_text );
+    } else {
+        if ( get_option('comment_registration') && ! is_user_logged_in() )
+            $link = '<a rel="nofollow" class="comment-reply-login" href="' . esc_url( wp_login_url( get_permalink() ) ) . '">' . $login_text . '</a>';
+        else
+            $link = "<a class='comment-reply-link' href='" . esc_url( add_query_arg( 'replytocom', $comment->comment_ID ) ) . "#" . $respond_id . "' onclick='return addComment.moveForm(\"$add_below-$comment->comment_ID\", \"$comment->comment_ID\", \"$respond_id\", \"$post->ID\")'>$reply_text</a>";
+
+    }
 
 	/**
 	 * Filter the comment reply link.
@@ -1273,6 +1288,7 @@ function get_comment_reply_link($args = array(), $comment = null, $post = null) 
 	 * @param object  $comment The object of the comment being replied.
 	 * @param WP_Post $post    The WP_Post object.
 	 */
+
 	return apply_filters( 'comment_reply_link', $before . $link . $after, $args, $comment, $post );
 }
 
@@ -1371,6 +1387,12 @@ function get_cancel_comment_reply_link( $text = '' ) {
 
 	$style = isset($_GET['replytocom']) ? '' : ' style="display:none;"';
 	$link = esc_html( remove_query_arg('replytocom') ) . '#respond';
+
+    if(defined( 'SYMFONY_WP' ) )
+    {
+        global $s_wordpress;
+        $link = $s_wordpress->convertUrl( $link );
+    }
 
 	$formatted_link = '<a rel="nofollow" id="cancel-comment-reply-link" href="' . $link . '"' . $style . '>' . $text . '</a>';
 	/**
@@ -2019,7 +2041,12 @@ function comment_form( $args = array(), $post_id = null ) {
 					do_action( 'comment_form_must_log_in_after' );
 					?>
 				<?php else : ?>
-					<form action="<?php echo site_url( '/wp-comments-post.php' ); ?>" method="post" id="<?php echo esc_attr( $args['id_form'] ); ?>" class="comment-form"<?php echo $html5 ? ' novalidate' : ''; ?>>
+                    <?php if( defined( 'SYMFONY_WP' ) ): ?>
+                        <?php global $s_wordpress; ?>
+                        <form action="<?php echo $s_wordpress->convertUrl( site_url( '/wp-comments-post.php' ) ); ?>" method="post" id="<?php echo esc_attr( $args['id_form'] ); ?>" class="comment-form"<?php echo $html5 ? ' novalidate' : ''; ?>>
+                    <?php else: ?>
+					    <form action="<?php echo site_url( '/wp-comments-post.php' ); ?>" method="post" id="<?php echo esc_attr( $args['id_form'] ); ?>" class="comment-form"<?php echo $html5 ? ' novalidate' : ''; ?>>
+                    <?php endif; ?>
 						<?php
 						/**
 						 * Fires at the top of the comment form, inside the <form> tag.

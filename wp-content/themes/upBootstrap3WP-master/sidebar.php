@@ -9,6 +9,7 @@ if(defined('SYMFONY_WP')) {
     include( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'twig' . DIRECTORY_SEPARATOR . 'sidebar.html.twig' );
 } else {
 ?>
+    ( SIDEBAR-PAGE )
 	<div id="secondary" class="widget-area well well-sm" role="complementary">
 		<?php do_action( 'before_sidebar' ); ?>
 		<?php if ( ! dynamic_sidebar( 'sidebar-1' ) ) : ?>

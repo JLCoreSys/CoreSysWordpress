@@ -6,9 +6,18 @@
  */
 
 if ( 'POST' != $_SERVER['REQUEST_METHOD'] ) {
-	header('Allow: POST');
-	header('HTTP/1.1 405 Method Not Allowed');
-	header('Content-Type: text/plain');
+
+    // SYMFONY_WP
+    ?>
+        <script>
+            window.history.back();
+        </script>
+    <?php
+
+    header('Allow: POST');
+    header('HTTP/1.1 405 Method Not Allowed');
+    header('Content-Type: text/plain');
+
 	exit;
 }
 
@@ -126,6 +135,7 @@ $comment_parent = isset($_POST['comment_parent']) ? absint($_POST['comment_paren
 $commentdata = compact('comment_post_ID', 'comment_author', 'comment_author_email', 'comment_author_url', 'comment_content', 'comment_type', 'comment_parent', 'user_ID');
 
 $comment_id = wp_new_comment( $commentdata );
+
 $comment = get_comment($comment_id);
 
 /**

@@ -2127,6 +2127,9 @@ function wp_die( $message = '', $title = '', $args = array() ) {
  */
 function _default_wp_die_handler( $message, $title = '', $args = array() ) {
 	$defaults = array( 'response' => 500 );
+    if( defined( 'SYMFONY_WP' ) ) {
+        $defaults = array( 'response' => 200 );
+    }
 	$r = wp_parse_args($args, $defaults);
 
 	$have_gettext = function_exists('__');
