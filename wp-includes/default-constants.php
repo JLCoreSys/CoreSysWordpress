@@ -164,6 +164,11 @@ function wp_plugin_directory_constants() {
  * @since 3.0.0
  */
 function wp_cookie_constants() {
+    if(defined( 'SYMFONY_WP' ) ) {
+        global $s_wordpress;
+        $s_wordpress->wp_cookie_constants();
+    }
+
 	/**
 	 * Used to guarantee unique hash cookies
 	 * @since 1.5
@@ -215,8 +220,8 @@ function wp_cookie_constants() {
 	/**
 	 * @since 1.2.0
 	 */
-	if ( !defined('COOKIEPATH') )
-		define('COOKIEPATH', preg_replace('|https?://[^/]+|i', '', get_option('home') . '/' ) );
+    if ( !defined('COOKIEPATH') )
+        define('COOKIEPATH', preg_replace('|https?://[^/]+|i', '', get_option('home') . '/' ) );
 
 	/**
 	 * @since 1.5.0

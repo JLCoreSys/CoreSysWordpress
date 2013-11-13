@@ -470,6 +470,8 @@ function wp_authenticate($username, $password) {
 	$password = trim($password);
 
 	$user = apply_filters('authenticate', null, $username, $password);
+//    debug_print_backtrace( 0, 5 );
+//    exit;
 
 	if ( $user == null ) {
 		// TODO what should the error message be? (Or would these even happen?)

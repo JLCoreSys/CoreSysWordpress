@@ -5,7 +5,9 @@
  * @author Matthias Thom | http://upplex.de
  * @package upBootWP 0.1
  */
-
+if(defined( 'SYMFONY_WP')) {
+    include( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'twig' . DIRECTORY_SEPARATOR . 'search.html.twig');
+} else {
 get_header(); ?>
     ( SEARCH-PAGE )
 	<div class="container">
@@ -45,3 +47,4 @@ get_header(); ?>
 		</div><!-- .row -->
 	</div><!-- .container -->
 <?php get_footer(); ?>
+<?php } ?>

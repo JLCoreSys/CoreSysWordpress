@@ -1,6 +1,10 @@
 CoreSysWordpress
 ================
 
+REQUIRES: jmccrei/SiteBundle
+
+REQUIRED: jmccrei/MediaBundle
+
 A Wordpress 3.7.1  vendor bundle for Symfony2
 This wordpress will be modified such that specified templates will return Twig templates back to symfony to be integrated into views.
 There will be modifications done to the core files which will not interfere with normal operation of wordpress.

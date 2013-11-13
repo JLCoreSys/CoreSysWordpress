@@ -417,6 +417,9 @@ if ( defined( 'RELOCATE' ) && RELOCATE ) { // Move flag is set
 		update_option( 'siteurl', $url );
 }
 
+//    echo COOKIEPATH . '<br>';
+//    echo COOKIEDOMAIN . '<br>';
+
 //Set a cookie now to see if they are supported by the browser.
 setcookie(TEST_COOKIE, 'WP Cookie check', 0, COOKIEPATH, COOKIE_DOMAIN);
 if ( SITECOOKIEPATH != COOKIEPATH )
@@ -517,8 +520,12 @@ case 'retrievepassword' :
 	$user_login = isset($_POST['user_login']) ? wp_unslash($_POST['user_login']) : '';
 
 ?>
-
-<form name="lostpasswordform" id="lostpasswordform" action="<?php echo esc_url( site_url( 'wp-login.php?action=lostpassword', 'login_post' ) ); ?>" method="post">
+<?php if( definde( 'SYMFONY_WP' ) ): ?>
+    <?php global $s_wordpress; ?>
+    <form name="lostpasswordform" id="lostpasswordform" action="<?php echo $s_wordpress->convertUrl( site_url( 'wp-login.php?action=lostpassword', 'login_post' ) ); ?>" method="post">
+<?php else: ?>
+    <form name="lostpasswordform" id="lostpasswordform" action="<?php echo esc_url( site_url( 'wp-login.php?action=lostpassword', 'login_post' ) ); ?>" method="post">
+<?php endif; ?>
 	<p>
 		<label for="user_login" ><?php _e('Username or E-mail:') ?><br />
 		<input type="text" name="user_login" id="user_login" class="input" value="<?php echo esc_attr($user_login); ?>" size="20" /></label>
@@ -530,7 +537,13 @@ case 'retrievepassword' :
 	 * @since 2.1.0
 	 */
 	do_action( 'lostpassword_form' ); ?>
-	<input type="hidden" name="redirect_to" value="<?php echo esc_attr( $redirect_to ); ?>" />
+
+    <?php if( definde( 'SYMFONY_WP' ) ): ?>
+    <?php global $s_wordpress; ?>
+	    <input type="hidden" name="redirect_to" value="<?php echo $s_wordpress->convertUrl( $redirect_to ); ?>" />
+    <?php else: ?>
+	    <input type="hidden" name="redirect_to" value="<?php echo esc_attr( $redirect_to ); ?>" />
+    <?php endif; ?>
 	<p class="submit"><input type="submit" name="wp-submit" id="wp-submit" class="button button-primary button-large" value="<?php esc_attr_e('Get New Password'); ?>" /></p>
 </form>
 
@@ -595,7 +608,12 @@ case 'rp' :
 	login_header(__('Reset Password'), '<p class="message reset-pass">' . __('Enter your new password below.') . '</p>', $errors );
 
 ?>
-<form name="resetpassform" id="resetpassform" action="<?php echo esc_url( site_url( 'wp-login.php?action=resetpass&key=' . urlencode( $_GET['key'] ) . '&login=' . urlencode( $_GET['login'] ), 'login_post' ) ); ?>" method="post" autocomplete="off">
+<?php if(defined('SYMFONY_WP')): ?>
+    <?php global $s_wordpress; ?>
+    <form name="resetpassform" id="resetpassform" action="<?php echo $s_wordpress->convertUrl( site_url( 'wp-login.php?action=resetpass&key=' . urlencode( $_GET['key'] ) . '&login=' . urlencode( $_GET['login'] ), 'login_post' ) ); ?>" method="post" autocomplete="off">
+        <?php else: ?>
+    <form name="resetpassform" id="resetpassform" action="<?php echo esc_url( site_url( 'wp-login.php?action=resetpass&key=' . urlencode( $_GET['key'] ) . '&login=' . urlencode( $_GET['login'] ), 'login_post' ) ); ?>" method="post" autocomplete="off">
+        <?php endif; ?>
 	<input type="hidden" id="user_login" value="<?php echo esc_attr( $_GET['login'] ); ?>" autocomplete="off" />
 
 	<p>
@@ -672,8 +690,12 @@ case 'register' :
 	$redirect_to = apply_filters( 'registration_redirect', $registration_redirect );
 	login_header(__('Registration Form'), '<p class="message register">' . __('Register For This Site') . '</p>', $errors);
 ?>
-
-<form name="registerform" id="registerform" action="<?php echo esc_url( site_url('wp-login.php?action=register', 'login_post') ); ?>" method="post">
+    <?php if(defined('SYMFONY_WP')): ?>
+    <?php global $s_wordpress; ?>
+        <form name="registerform" id="registerform" action="<?php echo $s_wordpress->convertUrl( site_url('wp-login.php?action=register', 'login_post') ); ?>" method="post">
+    <?php else: ?>
+        <form name="registerform" id="registerform" action="<?php echo esc_url( site_url('wp-login.php?action=register', 'login_post') ); ?>" method="post">
+    <?php endif; ?>
 	<p>
 		<label for="user_login"><?php _e('Username') ?><br />
 		<input type="text" name="user_login" id="user_login" class="input" value="<?php echo esc_attr(wp_unslash($user_login)); ?>" size="20" /></label>
@@ -692,7 +714,12 @@ case 'register' :
 	?>
 	<p id="reg_passmail"><?php _e('A password will be e-mailed to you.') ?></p>
 	<br class="clear" />
-	<input type="hidden" name="redirect_to" value="<?php echo esc_attr( $redirect_to ); ?>" />
+    <?php if(defined('SYMFONY_WP')):?>
+        <?php global $s_wordpress; ?>
+	    <input type="hidden" name="redirect_to" value="<?php echo $s_wordpress->convertUrl( $redirect_to ); ?>" />
+    <?php else: ?>
+	    <input type="hidden" name="redirect_to" value="<?php echo esc_attr( $redirect_to ); ?>" />
+    <?php endif; ?>
 	<p class="submit"><input type="submit" name="wp-submit" id="wp-submit" class="button button-primary button-large" value="<?php esc_attr_e('Register'); ?>" /></p>
 </form>
 
@@ -730,7 +757,16 @@ default:
 			$redirect_to = preg_replace('|^http://|', 'https://', $redirect_to);
 	} else {
 		$redirect_to = admin_url();
+        if( defined( 'SYMFONY_WP' ) ) {
+            global $s_wordpress;
+            $redirect_to = $s_wordpress->get_site_url( null, '/' );
+        }
 	}
+
+    if( defined( 'SYMFONY_WP' ) ) {
+        global $s_wordpress;
+        $redirect_to = $s_wordpress->convertUrl( $redirect_to );
+    }
 
 	$reauth = empty($_REQUEST['reauth']) ? false : true;
 
@@ -741,10 +777,14 @@ default:
 		$secure_cookie = false;
 
 	// If cookies are disabled we can't log in even with a valid user+pass
-	if ( isset($_POST['testcookie']) && empty($_COOKIE[TEST_COOKIE]) )
-		$user = new WP_Error('test_cookie', __("<strong>ERROR</strong>: Cookies are blocked or not supported by your browser. You must <a href='http://www.google.com/cookies.html'>enable cookies</a> to use WordPress."));
-	else
-		$user = wp_signon('', $secure_cookie);
+    if(defined( 'SYMFONY_WP' ) ) {
+        $user = wp_signon('', $secure_cookie);
+    } else {
+        if ( isset($_POST['testcookie']) && empty($_COOKIE[TEST_COOKIE]) )
+            $user = new WP_Error('test_cookie', __("<strong>ERROR</strong>: Cookies are blocked or not supported by your browser. You must <a href='http://www.google.com/cookies.html'>enable cookies</a> to use WordPress."));
+        else
+            $user = wp_signon('', $secure_cookie);
+    }
 
 	$requested_redirect_to = isset( $_REQUEST['redirect_to'] ) ? $_REQUEST['redirect_to'] : '';
 	/**
@@ -831,8 +871,12 @@ default:
 		$user_login = ( 'incorrect_password' == $errors->get_error_code() || 'empty_password' == $errors->get_error_code() ) ? esc_attr(wp_unslash($_POST['log'])) : '';
 	$rememberme = ! empty( $_POST['rememberme'] );
 ?>
-
+<?php if(defined('SYMFONY_WP')): ?>
+<?php global $s_wordpress; ?>
+<form name="loginform" id="loginform" action="<?php echo $s_wordpress->convertUrl( site_url( 'wp-login.php', 'login_post' ) ); ?>" method="post">
+        <?php else: ?>
 <form name="loginform" id="loginform" action="<?php echo esc_url( site_url( 'wp-login.php', 'login_post' ) ); ?>" method="post">
+    <?php endif; ?>
 	<p>
 		<label for="user_login"><?php _e('Username') ?><br />
 		<input type="text" name="log" id="user_login" class="input" value="<?php echo esc_attr($user_login); ?>" size="20" /></label>

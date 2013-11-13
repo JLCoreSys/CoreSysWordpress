@@ -207,7 +207,16 @@ class Wordpress
     public function wp_plugin_directory_constants()
     {
         defined( 'SYMFONY_WP_SITE_URL' ) || define( 'SYMFONY_WP_SITE_URL', get_option('siteurl'));
-        echo SYMFONY_WP_SITE_URL;
+    }
+
+    public function wp_cookie_constants()
+    {
+        // we want this to be non specific for our needs
+        defined( 'COOKIEHASH' ) || define( 'COOKIEHASH', '');
+        defined( 'COOKIEPATH' ) || define( 'COOKIEPATH', '/' );
+        defined( 'SITECOOKIEPATH' ) || define( 'SITECOOKIEPATH', '/' );
+        defined( 'PLUGINS_COOKIE_PATH' ) || define( 'PLUGINS_COOKIE_PATH', '/' );
+
     }
 
     /**
